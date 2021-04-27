@@ -22,13 +22,24 @@ public class Board {
     }
 
     public void printBoard() {
+        printPlayerABoard();
+        System.out.println();
+        printPlayerBBoard();
+    }
+
+    private void printPlayerABoard() {
         System.out.println("PLAYER A WELL: [" + getPlayerAWell() + "]");
-        for(int i = 0; i < this.boardBins.length ; i++) {
-            for(int j = 0; j < this.boardBins[0].length ; j++) {
-                System.out.print("[" + this.boardBins[i][j] + "] ");
-            }
-            System.out.println();
+        for(int i = this.boardBins[0].length - 2; i >= 0; i --) {
+            System.out.print((i + 1) + ".[" + this.boardBins[0][i] + "] ");
+
         }
+    }
+
+    private void printPlayerBBoard() {
+        for(int i = 0; i < this.boardBins[1].length - 1; i ++) {
+            System.out.print((i + 1) + ".[" + this.boardBins[1][i] + "] ");
+        }
+        System.out.println();
         System.out.println("PLAYER B WELL: [" + getPlayerBWell() + "]");
     }
 

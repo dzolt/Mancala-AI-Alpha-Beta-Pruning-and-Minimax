@@ -4,6 +4,8 @@ import lombok.Data;
 import pl.zoltowski.damian.utils.dataType.MoveStatus;
 import pl.zoltowski.damian.utils.dataType.Player;
 
+import java.util.Scanner;
+
 @Data
 public class Mancala {
     private Board board;
@@ -45,6 +47,11 @@ public class Mancala {
         for (int i = stonesToMove; i > 0; i--) {
             //calculate next index to move
             index++;
+            //switch player board if met the end of the holes
+            if (index == bins[sideIndex].length) {
+                sideIndex = sideIndex == 0 ? sideIndex + 1 : sideIndex - 1;
+                index = 0;
+            }
             //if we have our last stone to deal with and are on our side
             if ((i == 1) && (sideIndex == currentPlayer.getNumber())) {
                 //and it appears to be placed in our well we place it there and allow the second move
@@ -53,24 +60,18 @@ public class Mancala {
                     return MoveStatus.REQUIRES_ANOTHER_MOVE;
                 } else if(bins[sideIndex][index] == 0) { //else if it appears to be placed in our empty field
                     stealFromPlayer(index);
-                    changePlayers();
                     return MoveStatus.COMPLETED;
                 }
             }
             //check if other player board is on board right now and if its his well if it is increment index to switch player
             if (sideIndex == otherPlayer.getNumber()) {
                 if (index == bins[sideIndex].length - 1) {
-                    index++;
+                    sideIndex = sideIndex == 0 ? sideIndex + 1 : sideIndex - 1;
+                    index = 0;
                 }
-            }
-            //switch player board if met the end of the holes
-            if (index == bins[sideIndex].length) {
-                sideIndex = sideIndex == 0 ? sideIndex + 1 : sideIndex - 1;
-                index = 0;
             }
             bins[sideIndex][index]++;
         }
-        changePlayers();
         return MoveStatus.COMPLETED;
     }
 
@@ -109,7 +110,7 @@ public class Mancala {
         int indexOfWell = this.board.getBoardBins()[currentPlayer.getNumber()].length - 1;
         int opposingIndex = binsNumber - 1 - index;
         if(this.board.getBoardBins()[otherPlayer.getNumber()][opposingIndex] != 0) {
-            this.board.getBoardBins()[currentPlayer.getNumber()][indexOfWell] += this.board.getBoardBins()[otherPlayer.getNumber()][index] + 1;
+            this.board.getBoardBins()[currentPlayer.getNumber()][indexOfWell] += this.board.getBoardBins()[otherPlayer.getNumber()][opposingIndex] + 1;
             this.board.getBoardBins()[otherPlayer.getNumber()][opposingIndex] = 0;
         }
     }
@@ -125,5 +126,46 @@ public class Mancala {
             this.currentPlayer = this.playerA;
             this.otherPlayer = this.playerB;
         }
+    }
+
+
+    private Player selectWinner() {
+        int indexOfWell = this.board.getBoardBins()[currentPlayer.getNumber()].length - 1;
+        if(this.board.getBoardBins()[this.playerA.getNumber()][indexOfWell] > this.board.getBoardBins()[this.playerB.getNumber()][indexOfWell]) {
+            System.out.println("PLAYER: " + playerA.name() + "WON");
+            return this.playerA;
+        } else {
+            System.out.println("PLAYER: " + this.playerB.name() + "WON");
+            return this.playerB;
+        }
+    }
+
+    /**
+     * Game loop that handles the game state.
+     * Waits for player move and handles the move
+     * accordingly to game rules.
+     * @return Player - player who won the game
+     */
+    public Player start(){
+        Scanner in = new Scanner(System.in);
+        MoveStatus status = MoveStatus.START_GAME;
+        while(status != MoveStatus.END_GAME) {
+            this.getBoard().printBoard();
+            System.out.println(currentPlayer.name() + " please pick a bin 1-6");
+            int bin = in.nextInt();
+            status = move(bin - 1);
+            if(status == MoveStatus.COMPLETED) {
+                changePlayers();
+            }
+        }
+        return selectWinner();
+    }
+
+    public void minMax(){
+        //TODO: implement min max
+    }
+
+    public void alphaBeta(){
+        //TODO: implement alpha beta
     }
 }

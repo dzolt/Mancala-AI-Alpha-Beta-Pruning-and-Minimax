@@ -9,12 +9,10 @@ public class Program {
         Player playerA = Player.PLAYER_A;
         Player playerB = Player.PLAYER_B;
 
-        Mancala mancala = new Mancala(playerB, playerA, 6);
-        mancala.getBoard().getBoardBins()[1][3] = 0;
-        mancala.getBoard().getBoardBins()[1][2] = 1;
-        mancala.getBoard().printBoard();
-        mancala.move(2);
-        mancala.getBoard().printBoard();
+        Mancala mancala = new Mancala(playerA, playerB, 6);
+        mancala.getBoard().getBoardBins()[0][5] = 8;
+       Player p = mancala.start();
+        System.out.println("WINNER " + p.name());
 //
 
     }

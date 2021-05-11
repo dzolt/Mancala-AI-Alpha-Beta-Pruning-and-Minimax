@@ -1,12 +1,18 @@
 package pl.zoltowski.damian;
 
 import pl.zoltowski.damian.mancala.Mancala;
+import pl.zoltowski.damian.mancala.heuristic.MoveValueHeuristic;
+import pl.zoltowski.damian.mancala.heuristic.SimpleMoveValueHeuristic;
 import pl.zoltowski.damian.utils.dataType.GameModeAI;
 import pl.zoltowski.damian.utils.dataType.Player;
 
 import java.util.Scanner;
 
 public class Program {
+    static final int BINS_NUMBER = 6;
+    static final int INITIAL_NUMBER_OF_STONES = 4;
+    static final MoveValueHeuristic MOVE_VALUE_HEURISTIC = new SimpleMoveValueHeuristic();
+
     public static void main(String[] args) {
         Mancala mancala = getGameMode();
         Player p = mancala.start();
@@ -24,7 +30,7 @@ public class Program {
             return getGameMode();
         } else {
             if(input == 1) {
-                return new Mancala(Player.PLAYER_A, Player.PLAYER_B, 6, 4);
+                return new Mancala(Player.PLAYER_A, Player.PLAYER_B, BINS_NUMBER, INITIAL_NUMBER_OF_STONES, MOVE_VALUE_HEURISTIC);
             } else if (input == 2) {
                 return chooseGameModeAIvsHuman(in);
             } else {
@@ -36,7 +42,7 @@ public class Program {
         GameModeAI gameModeAI_1 = chooseGameModeAIvsAI(in, 1);
         GameModeAI gameModeAI_2 = chooseGameModeAIvsAI(in, 2);
 
-        return new Mancala(Player.PLAYER_AI_1, Player.PLAYER_AI_2, 6, 4 , gameModeAI_1, gameModeAI_2);
+        return new Mancala(Player.PLAYER_AI_1, Player.PLAYER_AI_2, BINS_NUMBER, INITIAL_NUMBER_OF_STONES , gameModeAI_1, gameModeAI_2, MOVE_VALUE_HEURISTIC);
     }
 
     private static GameModeAI chooseGameModeAIvsAI(Scanner in, int playerNumber) {
@@ -58,6 +64,6 @@ public class Program {
 
     private static Mancala chooseGameModeAIvsHuman(Scanner in) {
         GameModeAI gameModeAI = chooseGameModeAIvsAI(in, 1);
-        return new Mancala(Player.PLAYER_A, Player.PLAYER_AI_2, 6, 4, gameModeAI);
+        return new Mancala(Player.PLAYER_A, Player.PLAYER_AI_2, BINS_NUMBER, INITIAL_NUMBER_OF_STONES, gameModeAI, MOVE_VALUE_HEURISTIC);
     }
 }

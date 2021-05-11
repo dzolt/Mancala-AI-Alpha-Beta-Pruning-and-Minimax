@@ -1,6 +1,6 @@
 package pl.zoltowski.damian.mancala.heuristic;
 
-import pl.zoltowski.damian.mancala.GameState;
+import pl.zoltowski.damian.mancala.logic.GameState;
 import pl.zoltowski.damian.utils.dataType.Player;
 
 public abstract class MoveValueHeuristic {

@@ -1,4 +1,4 @@
-package pl.zoltowski.damian.mancala;
+package pl.zoltowski.damian.mancala.logic;
 
 import lombok.Data;
 import pl.zoltowski.damian.mancala.tools.AlphaBetaAlgorithm;

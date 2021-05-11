@@ -1,6 +1,7 @@
-package pl.zoltowski.damian.mancala;
+package pl.zoltowski.damian.mancala.logic;
 
 import lombok.Data;
+import pl.zoltowski.damian.mancala.board.Board;
 import pl.zoltowski.damian.mancala.heuristic.MoveValueHeuristic;
 import pl.zoltowski.damian.utils.dataType.GameModeAI;
 import pl.zoltowski.damian.utils.dataType.Player;

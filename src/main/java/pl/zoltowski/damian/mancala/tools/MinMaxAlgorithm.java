@@ -1,9 +1,7 @@
 package pl.zoltowski.damian.mancala.tools;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.zoltowski.damian.mancala.GameEngine;
-import pl.zoltowski.damian.mancala.GameState;
+import pl.zoltowski.damian.mancala.logic.GameState;
 import pl.zoltowski.damian.mancala.Mancala;
 import pl.zoltowski.damian.utils.dataType.MoveStatus;
 import pl.zoltowski.damian.utils.dataType.Player;

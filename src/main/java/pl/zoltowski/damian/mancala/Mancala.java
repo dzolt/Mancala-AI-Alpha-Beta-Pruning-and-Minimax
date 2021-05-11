@@ -2,16 +2,11 @@ package pl.zoltowski.damian.mancala;
 
 import lombok.Data;
 import pl.zoltowski.damian.mancala.heuristic.MoveValueHeuristic;
+import pl.zoltowski.damian.mancala.logic.GameEngine;
+import pl.zoltowski.damian.mancala.logic.GameState;
 import pl.zoltowski.damian.utils.dataType.GameModeAI;
 import pl.zoltowski.damian.utils.dataType.MoveStatus;
 import pl.zoltowski.damian.utils.dataType.Player;
-import pl.zoltowski.damian.utils.dataType.Tuple;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 @Data
 public class Mancala {

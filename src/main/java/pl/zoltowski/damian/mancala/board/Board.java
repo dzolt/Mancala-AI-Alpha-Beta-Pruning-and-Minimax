@@ -1,4 +1,4 @@
-package pl.zoltowski.damian.mancala;
+package pl.zoltowski.damian.mancala.board;
 
 import lombok.Data;
 

@@ -15,7 +15,10 @@ public class Program {
 
     public static void main(String[] args) {
         Mancala mancala = getGameMode();
+        long timeSt = System.currentTimeMillis();
         Player p = mancala.start();
+        long elapsedTime = System.currentTimeMillis() - timeSt;
+        System.out.println("ELAPSED TIME: " + elapsedTime);
     }
 
     private static Mancala getGameMode() {

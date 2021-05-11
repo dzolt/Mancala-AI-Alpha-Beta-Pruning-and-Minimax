@@ -23,6 +23,7 @@ public class GameState {
     private MoveValueHeuristic moveValueHeuristic;
 
     public GameState(Player playerA, Player playerB, int binsNumber, int initialNumberOfStones, MoveValueHeuristic moveValueHeuristic) {
+        this.board = new Board(binsNumber, initialNumberOfStones);
         this.currentPlayer = playerA;
         this.otherPlayer = playerB;
         this.playerA = playerA;

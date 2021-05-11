@@ -8,6 +8,9 @@ import pl.zoltowski.damian.utils.dataType.MoveStatus;
 import pl.zoltowski.damian.utils.dataType.Player;
 import pl.zoltowski.damian.utils.dataType.Tuple;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 @Data
@@ -100,6 +103,7 @@ public class GameEngine {
 
     /**
      * Chooses move algorithm depending on the AI's algorithm chosen during game init
+     *
      * @return best possible move in current situation
      */
     public Tuple<Integer, Double> determineMove() {
@@ -120,24 +124,39 @@ public class GameEngine {
 
     public void AIvsAI() {
         MoveStatus status = MoveStatus.START_GAME;
-        int mo = 0;
+        int movePlayerA = 0;
+        int movePlayerB = 0;
         int bin;
+        int currentNumOfMoves;
         while (status != MoveStatus.END_GAME) {
-            System.out.println("MOVE NO: " + ++mo);
             this.gameState.getBoard().printBoard();
             System.out.println(this.gameState.getCurrentPlayer().name() + " please pick a bin 1-6");
-            Tuple<Integer, Double> move = determineMove();
-            if (move.getFirst() != null) {
-                bin = move.getFirst();
-
-                String moveAlg = "";
-                moveAlg = this.gameState.getCurrentPlayer() == Player.PLAYER_AI_1 ? this.gameState.getGameModeAI_1().name() : this.gameState.getGameModeAI_2().name();
-                System.out.println(this.gameState.getCurrentPlayer().name() + " chose move " + move.getFirst() + " with rate of " + move.getSecond() + " and " + moveAlg);
+            if (movePlayerA == 0 && this.gameState.getCurrentPlayer() == this.gameState.getPlayerA()) {
+                movePlayerA++;
+                List<Integer> availableMoves = this.gameState.getPossibleMovesForPlayer(this.gameState.getCurrentPlayer());
+                Collections.shuffle(availableMoves);
+                status = move(availableMoves.get(0));
             } else {
-                return;
-            }
+                Tuple<Integer, Double> move = determineMove();
+                if (move.getFirst() != null) {
+                    if (this.gameState.getCurrentPlayer() == this.gameState.getPlayerA()) {
+                        movePlayerA++;
+                        currentNumOfMoves = movePlayerA;
+                    } else {
+                        movePlayerB++;
+                        currentNumOfMoves = movePlayerB;
+                    }
+                    bin = move.getFirst();
+                    String moveAlg = "";
+                    moveAlg = this.gameState.getCurrentPlayer() == Player.PLAYER_AI_1 ? this.gameState.getGameModeAI_1().name() : this.gameState.getGameModeAI_2().name();
+                    System.out.println(this.gameState.getCurrentPlayer().name() + " chose move " + move.getFirst() + " with rate of " + move.getSecond() + " and " + moveAlg);
+                    System.out.println("Current number of moves for player: " + this.gameState.getCurrentPlayer() + " equals " + currentNumOfMoves);
+                } else {
+                    return;
+                }
 
-            status = move(bin);
+                status = move(bin);
+            }
         }
     }
 
